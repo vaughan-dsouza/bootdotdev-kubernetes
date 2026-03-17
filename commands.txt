@@ -1,0 +1,50 @@
+minikube version
+minikube start
+minikube start --extra-config="apiserver.cors-allowed-origins=['http://boot.dev']"
+minikube dashboard --port=63840
+minikube stop
+minikube delete
+
+Deploying an Image
+
+The kubectl create deployment command will create a "deployment" for us. We'll talk more about the nuances of "deployments" later. But to put it simply, we only need to provide two things:
+
+    The name of the deployment (this can be anything, it's used to identify the deployment)
+    The ID of the Docker image we want to deploy (it would be a full URL if we weren't hosting the image on Docker Hub, which is the default)
+
+kubectl create deployment synergychat-web --image=docker.io/bootdotdev/synergychat-web:latest
+
+This command will deploy a container built from this Docker image to your local k8s cluster.
+kubectl create deployment synergychat-web --image=docker.io/bootdotdev/synergychat-web:latest
+
+kubectl get deployments
+
+kubectl get pods
+kubectl port-forward synergychat-web-f7b9f96dd-6jfq4 8080:8080
+
+Minikube runs a single-node cluster, whereas production clusters are multi-node distributed systems.
+
+kubectl edit deployment synergychat-web
+
+kubectl get pods
+kubectl logs PODNAME
+kubectl delete pod PODNAME
+kubectl get pods
+
+Every Pod in a Kubernetes cluster has a unique internal-to-k8s IP address
+
+kubectl get pods -o wide
+kubectl proxy
+This will start a proxy server on your local machine, probably on 127.0.0.1:8001. Assuming that's the host, navigate to http://127.0.0.1:8001/api/v1/namespaces/default/pods in your browser. 
+
+kubectl get deployment synergychat-web -o yaml
+
+A ReplicaSet maintains a stable set of replica Pods running at any given time. 
+kubectl get replicasets
+
+kubectl get deployment synergychat-web -o yaml > web-deployment.yaml
+kubectl apply -f web-deployment.yaml
+You should get a warning that lets you know that you're missing the last-applied-configuration annotation. That's okay! we got that warning because we created this deployment the quick and dirty way, by using kubectl create deployment instead of creating a YAML file and using kubectl apply -f
+
+Kubernetes is an "infra-as-code" tool, so it's important to keep your configuration files in a git repo.
+
