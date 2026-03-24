@@ -48,3 +48,35 @@ You should get a warning that lets you know that you're missing the last-applied
 
 Kubernetes is an "infra-as-code" tool, so it's important to keep your configuration files in a git repo.
 
+kubectlapply -f api-configmap.yaml
+kubectl get configmaps
+sudo chown vaughan:vaughan api-configmap.yaml
+
+Config Maps Are Insecure- not crypotgraphically secure and accessible by anyone on the cluster
+use Kubernetes secrets instead 
+
+Crawler
+
+spec:
+  containers:
+    - image: bootdotdev/synergychat-api:latest
+      name: synergychat-api
+      env:
+        - name: THING_ONE
+          valueFrom:
+            configMapKeyRef:
+              name: synergychat-api-configmap
+              key: THING_ONE
+        - name: THING_TWO
+          valueFrom:
+            configMapKeyRef:
+              name: synergychat-api-configmap
+              key: THING_TWO
+        - name: THING_THREE
+          ...
+verbose use envForm in env's stead
+
+Services
+Services provide a stable endpoint for pods.
+clusterIP 
+
