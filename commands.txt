@@ -78,5 +78,7 @@ verbose use envForm in env's stead
 
 Services
 Services provide a stable endpoint for pods.
-clusterIP 
-
+clusterIP - is the IP address that the service is bound to on the internal Kubernetes network. 
+kubectl port-forward service/web-service 8080:80
+kubectl get svc web-service -o yaml
+"svc" is a short-hand alias for "service", either will work in kubectl.
