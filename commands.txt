@@ -48,7 +48,7 @@ You should get a warning that lets you know that you're missing the last-applied
 
 Kubernetes is an "infra-as-code" tool, so it's important to keep your configuration files in a git repo.
 
-kubectlapply -f api-configmap.yaml
+kubectl apply -f api-configmap.yaml
 kubectl get configmaps
 sudo chown vaughan:vaughan api-configmap.yaml
 
@@ -82,3 +82,13 @@ clusterIP - is the IP address that the service is bound to on the internal Kuber
 kubectl port-forward service/web-service 8080:80
 kubectl get svc web-service -o yaml
 "svc" is a short-hand alias for "service", either will work in kubectl.
+
+changing docker cli to use minikube's docker daemon 
+docker info | grep -i "server"  --check OG docker version 
+eval $(minikube docker-env )  --change daemon
+eval $(minikube docker-env -u)   --revert back 
+
+
+check out Kubernetes Secrets
+
+A Gateway resource exposes services to the outside world and is used often in production environments.
